@@ -4,7 +4,7 @@ import { ReactElement } from 'react'
 import { GetStaticProps } from 'next'
 import Layout from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
-import { getSortedPostsData, PostData } from '../lib/posts'
+import { getSortedPostsData, PostData } from '../utils/posts'
 import Date from '../components/date'
 
 type PostProps = {
