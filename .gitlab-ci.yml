@@ -1,7 +1,7 @@
 image: node:erbium-alpine
 
 variables:
-  DEPLOYER_TAG: "registry.gitlab.com/rphovley-templates/nextjs-typescripta/deployer"
+  DEPLOYER_TAG: "registry.gitlab.com/rphovley-templates/nextjs-typescript/deployer"
 
 stages:
   - dependencies
