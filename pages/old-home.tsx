@@ -1,10 +1,11 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import { ReactElement } from 'react'
 import { GetStaticProps } from 'next'
-import { Button } from '@material-ui/core'
 import Layout from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
 import { getSortedPostsData, PostData } from '../utils/posts'
+import Date from '../components/date'
 
 type PostProps = {
   allPostsData: PostData[]
@@ -14,19 +15,26 @@ export default function Home({ allPostsData }: PostProps): ReactElement {
     <Layout home>
       <div>
         <Head>…</Head>
+        <section className={utilStyles.headingMd}>…</section>
         <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-          <Button onClick={login}>Login</Button>
+          <h2 className={utilStyles.headingLg}>Blog</h2>
+          <ul className={utilStyles.list}>
+            {allPostsData.map(({ id, date, title }) => (
+              <li className={utilStyles.listItem} key={id}>
+                <Link href="/posts/[id]" as={`/posts/${id}`}>
+                  <a>{title}</a>
+                </Link>
+                <br />
+                <small className={utilStyles.lightText}>
+                  <Date dateString={date} />
+                </small>
+              </li>
+            ))}
+          </ul>
         </section>
       </div>
     </Layout>
   )
-}
-
-async function login(): Promise<void> {
-  const res = await fetch('http://localhost:8080/api/auth/login')
-  const body = await res.json()
-  console.log('WAIT')
-  console.log(body)
 }
 
 export const getStaticProps: GetStaticProps = async () => {
