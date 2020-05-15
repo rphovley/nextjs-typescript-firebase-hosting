@@ -2,7 +2,7 @@ module.exports = {
   extends: ["airbnb", "plugin:@typescript-eslint/recommended"],
   parser: "@typescript-eslint/parser",
   plugins: ["@typescript-eslint", "prettier"],
-  globals: {fetch: false},
+  globals: {fetch: false, window: false},
   settings: {
     "import/parsers": {
       "@typescript-eslint/parser": [".ts", ".tsx"],
@@ -26,6 +26,7 @@ module.exports = {
     "arrow-body-style": 0,
     "react/jsx-filename-extension": 0,
     "react/react-in-jsx-scope": 0,
+    "react/jsx-props-no-spreading": 0,
     "@typescript-eslint/indent": [2, 2],
     "@typescript-eslint/no-namespace": 0,
     "@typescript-eslint/semi": [2, "never"],

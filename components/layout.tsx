@@ -85,9 +85,14 @@ const useStyles = makeStyles((theme) => ({
 type LayoutProps = {
   children: React.ReactNode
   home?: boolean
+  errMessage?: string
 }
 
-export default function Layout({ children, home }: LayoutProps): ReactElement {
+export default function Layout({
+  children,
+  home,
+  errMessage,
+}: LayoutProps): ReactElement {
   const classes = useStyles()
   const theme = useTheme()
   const [open, setOpen] = React.useState(false)

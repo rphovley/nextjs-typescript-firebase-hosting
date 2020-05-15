@@ -1,39 +1,39 @@
 import Head from 'next/head'
-import { ReactElement } from 'react'
-import { GetStaticProps } from 'next'
-import { Button } from '@material-ui/core'
+import { useRouter } from 'next/router'
+import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
+import { ReactElement, useState, useEffect } from 'react'
 import Layout from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
-import { getSortedPostsData, PostData } from '../utils/posts'
+import { isLoggedIn } from '../utils/login_store'
 
-type PostProps = {
-  allPostsData: PostData[]
-}
-export default function Home({ allPostsData }: PostProps): ReactElement {
+export default function Home(): ReactElement {
+  const router = useRouter()
+  const [errMessage, setErrMessage] = useState('')
+
+  useEffect(() => {
+    if (!isLoggedIn()) {
+      router.push('/login')
+    }
+  }, [])
+
   return (
     <Layout home>
       <div>
         <Head>…</Head>
-        <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-          <Button onClick={login}>Login</Button>
-        </section>
+        <section
+          className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}
+        />
+        <Snackbar
+          open={!!errMessage}
+          autoHideDuration={3000}
+          onClose={(): void => {
+            setErrMessage('')
+          }}
+        >
+          <Alert severity="error">{errMessage}</Alert>
+        </Snackbar>
       </div>
     </Layout>
   )
-}
-
-async function login(): Promise<void> {
-  const res = await fetch('http://localhost:8080/api/auth/login')
-  const body = await res.json()
-  console.log('WAIT')
-  console.log(body)
-}
-
-export const getStaticProps: GetStaticProps = async () => {
-  const allPostsData = getSortedPostsData()
-  return {
-    props: {
-      allPostsData,
-    },
-  }
 }
